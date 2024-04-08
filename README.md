@@ -1,18 +1,17 @@
-# Nome do projeto
+# Procrastinação
 
-Escreva um ou dois parágrafo resumindo o objetivo do seu projeto.
+O propósito é criar um software que ajude aqueles propensos à procrastinação a gerenciar suas tarefas, fornecendo clareza sobre o que precisa ser feito e em qual ordem de prioridade. Desta forma, almeja-se combater a procrastinação, promovendo uma rotina mais estruturada e produtiva para os usuários.
 
 ## Alunos integrantes da equipe
 
 * Pedro Ferreira Barcelos Costa
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
+* Júlia Marques de Moura
+* Bernardo Gonçalves Levy
 
 ## Professores responsáveis
 
-* Nome completo do professor 1
-* Nome completo do professor 2
+* Rommel Vieira Carneiro
+* Simone Alves Nogueira
 
 ## Instruções de utilização
 
