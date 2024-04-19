@@ -7,6 +7,7 @@ O propósito é criar um software que ajude aqueles propensos à procrastinaçã
 * Pedro Ferreira Barcelos Costa
 * Júlia Marques de Moura
 * Bernardo Gonçalves Levy
+* Carlos Eduardo Pamponet Porto Lima
 
 ## Professores responsáveis
 
