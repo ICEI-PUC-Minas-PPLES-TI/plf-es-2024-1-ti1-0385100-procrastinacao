@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tabela de Amigos</title>
+<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+
+<h1>Tabela de Amigos</h1>
+
+<div class="container">
+    <table>
+        <thead>
+            <tr>
+                <th><p class="add-friend-link">Adicionar Amigo...</p></th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Amigos serão exibidos aqui -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    document.querySelector('.add-friend-link').addEventListener('click', function() {
+        window.location.href = 'index2.html'; // Redireciona para a página anterior
+    });
+</script>
+
+</body>
+</html>

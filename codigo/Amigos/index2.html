@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adicionar Amigos</title>
+<link rel="stylesheet" type="text/css" href="styles2.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Adicionar Amigo</h1>
+    <form id="addFriendForm">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <input type="hidden" id="friendId">
+        <input type="submit" value="Adicionar Amigo">
+    </form>
+    <div id="friendsList">
+        <!-- Lista de amigos será exibida aqui -->
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
+
+
