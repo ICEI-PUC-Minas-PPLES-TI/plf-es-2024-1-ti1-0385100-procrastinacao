@@ -1,94 +1,117 @@
-var ul = document.getElementById("list");
-var li;
-var addButton = document.getElementById("add");
-addButton.addEventListener("click", addItem);
-var removeButton = document.getElementById("remove");
-removeButton.addEventListener("click", removeItem);
+const list = document.getElementById("list");
+const input = document.getElementById("input");
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+const addButton = document.getElementById("add");
+let tasksHistory = JSON.parse(localStorage.getItem("tasksHistory")) || [];
+const historyButton = document.getElementById("history");
+const historyModal = document.getElementById("historyModal");
+const historyTable = document.getElementById("historyTable");
+const removeButton = document.getElementById("remove");
 
-
-function addItem() {
-  var input = document.getElementById("input");
-  var item = input.value;
-  ul = document.getElementById("list");
-
-  var textNode = document.createTextNode(item);
-
-  if (item === "") {
-    // return false;
-    // var falseReturn = document.createElement("p");
-    // var returnValue = document.createTextNode("Empty Todo cannot be added");
-    // falseReturn.appendChild(returnValue);
-    // document.querySelector("p").appendChild(falseReturn);
-    alert("Empty Todo cannot be added");
-  } else {
-    //create li
-    li = document.createElement("li");
-    
-
-    //create checkbox
-    var checkBox = document.createElement("input");
-    checkBox.type = "checkbox";
-    checkBox.setAttribute("id", "check");
-
-    //create label
-    var label = document.createElement("label");
-    label.setAttribute("for", "item");
-
-    //add elements on web page
-    ul.appendChild(label);
-    li.appendChild(checkBox);
-    label.appendChild(textNode);
-    li.appendChild(label);
-    ul.insertBefore(li, ul.childNodes[0]);
-
-    setTimeout(() => {
-      li.className = "visual";
-    }, 2);
-
-    input.value = "";
-  }
-}
-function getDateTime() {
-  var now     = new Date(); 
-  var year    = now.getFullYear();
-  var month   = now.getMonth()+1; 
-  var day     = now.getDate();
-  var hour    = now.getHours();
-  var minute  = now.getMinutes();
-  var second  = now.getSeconds(); 
-  if(month.toString().length == 1) {
-       month = '0'+month;
-  }
-  if(day.toString().length == 1) {
-       day = '0'+day;
-  }   
-  if(hour.toString().length == 1) {
-       hour = '0'+hour;
-  }
-  if(minute.toString().length == 1) {
-       minute = '0'+minute;
-  }
-  if(second.toString().length == 1) {
-       second = '0'+second;
-  }   
-  var dateTime = day+'-'+month+'-'+year+' '+hour+':'+minute+':'+second;   
-   return dateTime;
-}
-
-// example usage: realtime clock
-setInterval(function(){
-  currentTime = getDateTime();
-  document.getElementById("digital-clock").innerHTML = currentTime;
-}, 1000);
-
-
-function removeItem() {
-  li = ul.children;
-
-  for (let index = 0; index < li.length; index++) {
-    while (li[index] && li[index].children[0].checked) {
-      ul.removeChild(li[index]);
+function addTask() {
+    if (input.value.trim()) {
+        const task = {
+            text: input.value,
+            done: false,
+            date: new Date(),
+        };
+        tasks.push(task);
+        input.value ="";
+        renderTasks();
+        saveTasks();
     }
-  }
 }
 
+function removeTasks() {
+    tasks = tasks.filter((task) => !task.done);
+    renderTasks();
+    saveTasks();
+}
+
+function toggleTaskDone(index) {
+    tasks[index].done = !tasks[index].done;
+    renderTasks();
+    saveTasks();
+    addToHistory(tasks[index]);
+}
+
+function addToHistory(task) {
+    const date = new Date();
+    const dateString = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+    tasksHistory.push({
+        text: task.text,
+        date: dateString,
+    });
+    saveTasksHistory();
+}
+
+function clearHistory() {
+    tasksHistory.length = 0;
+    saveTasksHistory();
+    renderHistory();
+}
+
+function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function saveTasksHistory() {
+    localStorage.setItem("tasksHistory", JSON.stringify(tasksHistory));
+}
+
+function renderTasks() {
+    list.innerHTML = "";
+    tasks.forEach((task, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <input type="checkbox" ${task.done ? "checked" : ""} onclick="toggleTaskDone(${index})">
+            <span>${task.text}</span>
+            <button type="button" class="btn btn-success complete-task-button" onclick="completeTask(${index})">Complete Task</button>
+        `;
+        list.appendChild(li);
+    });
+}
+
+function renderHistory() {
+    historyTable.innerHTML = "";
+    tasksHistory.forEach((task) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+            <td>${task.text}</td>
+            <td>${task.date}</td>
+        `;
+        historyTable.appendChild(tr);
+    });
+}
+
+function openModal() {
+    historyModal.style.display = "block";
+    renderHistory();
+}
+
+function closeModal() {
+    historyModal.style.display = "none";
+}
+
+addButton.addEventListener("click", addTask);
+historyButton.addEventListener("click", openModal);
+removeButton.addEventListener("click", removeTasks);
+
+function completeTask(index) {
+    tasks[index].done = true;
+    renderTasks();
+    saveTasks();
+    addToHistory(tasks[index]);
+}
+
+function updateClock() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    const seconds = now.getSeconds().toString().padStart(2, "0");
+    const digitalClock = document.getElementById("digital-clock");
+    digitalClock.textContent = `${hours}:${minutes}:${seconds}`;
+}
+
+setInterval(updateClock, 1000);
+updateClock();
