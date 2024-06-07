@@ -1,0 +1,53 @@
+.container {
+    max-width: 70rem;
+    margin: 1rem auto;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 0.5rem;
+}
+
+h1{
+    position: relative;
+    text-align: center;
+
+}
+
+.progress_bar {
+    border-radius: 10px;
+    border: 1px solid black;
+    height: 2rem;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 2rem;
+    padding-right: 100%;
+    overflow: hidden;
+    transition: padding-right 0.5s ease;
+}
+
+.progress_inner {
+    transition: background-color 0.6s linear;
+}
+
+input[type="checkbox"] {
+    height: 2rem;
+    width: 2rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+}
+
+input[type="checkbox"] + label {
+    font-size: 2rem;
+    line-height: 2rem;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+p, h4 {
+    margin: 0.5rem 0;
+}
