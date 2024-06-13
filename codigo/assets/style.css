@@ -142,3 +142,42 @@ li:active {
 .clear-history-button:hover {
     background-color: #b71c1c;
 }
+
+/*Dark-Mode*/
+
+#Dark-Mode{
+    width: 50px;
+    margin: 5px;
+}
+
+#Dark-Mode.active{
+    width: 50px;
+    margin: 5px;
+}
+
+.btn-darkmode{
+    width: 55px;
+    height: 25px;
+    border: 3px solid #f5f5f5;
+    border-radius: 60px;
+    position: relative;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.btn-darkmode::before{
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: #f5f5f5;
+    border-radius: 50%;
+    top: 50%;
+    left: 2px;
+    transform: translateY(-50%);
+    transition: left .5s;
+}
+
+.btn-darkmode.active::before{
+    left: 34px;
+}

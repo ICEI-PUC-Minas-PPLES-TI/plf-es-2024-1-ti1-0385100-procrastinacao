@@ -10,44 +10,50 @@
     <title>(WE)DOIT App 📝</title>
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h1 class="title_tasks my-5">My Tasks</h1>
-                <div class="digital-clock" id="digital-clock"></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="controls">
-                    <input type="text" id="input" placeholder="Enter Your Task" class="form-control my-3">
-                    <button type="button" id="add" class="btn btn-primary my-3">Add</button>
-                    <button type="button" id="remove" class="btn btn-danger my-3">Remove Done Tasks</button>
-                    <button type="button" id="history" class="btn btn-secondary my-3">See Tasks History</button>
+    <div class="darkmode">
+        <img id="Dark-Mode" src="./Dark-Mode/assets/images/Dark-Mode.png" alt="">
+        <div class="btn-darkmode"></div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h1 class="title_tasks my-5">My Tasks</h1>
+                    <div class="digital-clock" id="digital-clock"></div>
                 </div>
-                <ul id="list" class="list-unstyled"></ul>
+            
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="controls">
+                        <input type="text" id="input" placeholder="Enter Your Task" class="form-control my-3">
+                        <button type="button" id="add" class="btn btn-primary my-3">Add</button>
+                        <button type="button" id="remove" class="btn btn-danger my-3">Remove Done Tasks</button>
+                        <button type="button" id="history" class="btn btn-secondary my-3">See Tasks History</button>
+                    </div>
+                    <ul id="list" class="list-unstyled"></ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="historyModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 class="modal-text">Task Completion History</h2>
+                <table id="historyTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Task</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <button class="clear-history-button btn btn-danger" onclick="clearHistory()">Clear History</button>
             </div>
         </div>
     </div>
-
-    <div id="historyModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 class="modal-text">Task Completion History</h2>
-            <table id="historyTable" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Task</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-            <button class="clear-history-button btn btn-danger" onclick="clearHistory()">Clear History</button>
-        </div>
-    </div>
-
     <script src="/codigo/script/script.js"></script>
+    <script src="./Dark-Mode/assets/javascript/Dark-Mode.js"></script>
 </body>
 </html>
