@@ -16,11 +16,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         switch (checkedCount) {
             case 1:
-                color = 'red';
+                color = 'grey';
                 message = "20% - Isso é só o começo!";
                 break;
             case 2:
-                color = 'orange';
+                color = 'lightgrey';
                 message = "40% - Siga em frente!";
                 break;
             case 3:
