@@ -1,183 +1,65 @@
 body {
-    background: linear-gradient(45deg, #212529, #5a5c69, #212529);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-    font-family: "open sans";
-    display: flexbox;
-
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+body.light-mode {
+    background-color: #f0f0f0;
+    color: #333;
 }
-
-.title_tasks {
-    font-size: 4rem;
-    font-weight: bold;
-    color: #f5f5f5;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+body.dark-mode {
+    background-color: #1e1e2e;
+    color: #cdd9e5;
 }
-
-.digital-clock {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #f5f5f5;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    margin-top: 2rem;
+.task-inputs {
+    max-width: 600px;
+    margin: 0 auto;
 }
-
-.controls {
-    background-color: #f5f5f5;
-    padding: 2rem;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-}
-
-#input {
+.btn-custom {
+    background-color: #6f42c1;
+    color: #fff;
     border: none;
-    border-radius: 10px;
-    padding: 0.5rem 1rem;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
-
-#input:focus {
-    outline: none;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+.btn-custom:hover {
+    background-color: #563d7c;
 }
-
-button {
-    border: none;
-    border-radius: 10px;
-    padding: 0.5rem 1rem;
-    margin-right: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+ul {
+    list-style-type: none;
+    padding: 0;
+    max-width: 600px;
+    margin: 20px auto;
 }
-
-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-}
-
-button:active {
-    transform: translateY(0px);
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
-}
-
 li {
-    background-color: #f5f5f5;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 1rem;
-    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #3a3a52;
+    margin: 5px 0;
+    background-color: #2a2a3b;
+    border-radius: 4px;
 }
-
-li:hover {
-    transform: translateY(-2px);
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+li.done {
+    text-decoration: line-through;
+    color: gray;
 }
-
-li:active {
-    transform: translateY(0px);
-    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.1);
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
+canvas {
+    margin-top: 20px;
     width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
+    height: 300px;
+    max-width: 600px;
 }
-
+body.light-mode li {
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+body.light-mode li.done {
+    color: #999;
+}
 .modal-content {
-    background-color: #f5f5f5;
-    margin: 15% auto;
-    padding: 2rem;
-    border: 1px solid #888;
-    width: 80%;
+    background-color: #2a2a3b;
+    color: #cdd9e5;
 }
-
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-.modal-text {
-    margin-bottom: 2rem;
-}
-
-.clear-history-button {
-    background-color: #f44336;
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.5rem;
-}
-
-.clear-history-button:hover {
-    background-color: #b71c1c;
-}
-
-/*Dark-Mode*/
-
-#Dark-Mode{
-    width: 50px;
-    margin: 5px;
-}
-
-#Dark-Mode.active{
-    width: 50px;
-    margin: 5px;
-}
-
-.btn-darkmode{
-    width: 55px;
-    height: 25px;
-    border: 3px solid #f5f5f5;
-    border-radius: 60px;
-    position: relative;
-    cursor: pointer;
-    margin-left: 5px;
-}
-
-.btn-darkmode::before{
-    content: '';
-    position: absolute;
-    width: 15px;
-    height: 15px;
-    background-color: #f5f5f5;
-    border-radius: 50%;
-    top: 50%;
-    left: 2px;
-    transform: translateY(-50%);
-    transition: left .5s;
-}
-
-.btn-darkmode.active::before{
-    left: 34px;
+body.light-mode .modal-content {
+    background-color: #fff;
+    color: #333;
 }
