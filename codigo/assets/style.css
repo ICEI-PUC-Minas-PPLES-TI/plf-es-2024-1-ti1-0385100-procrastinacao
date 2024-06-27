@@ -18,9 +18,11 @@ body.dark-mode {
     background-color: #6f42c1;
     color: #fff;
     border: none;
+    transition: background-color 0.3s, transform 0.3s;
 }
 .btn-custom:hover {
     background-color: #563d7c;
+    transform: scale(1.05);
 }
 ul {
     list-style-type: none;

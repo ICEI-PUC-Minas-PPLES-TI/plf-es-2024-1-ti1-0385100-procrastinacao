@@ -20,9 +20,19 @@
             </div>
         </div>
         <ul id="taskList" class="list-group"></ul>
+
+        <!-- Dropdown for Chart Filter -->
+        <div class="mb-4">
+            <select id="chartFilter" class="form-select w-100" onchange="updateChart()">
+                <option value="month">Mês</option>
+                <option value="week">Semana</option>
+                <option value="day">Dia</option>
+            </select>
+        </div>
+
         <canvas id="taskChart"></canvas>
-        <button class="btn btn-custom mt-3" data-bs-toggle="modal" data-bs-target="#taskHistoryModal">Ver Histórico de Tarefas</button>
         <button class="btn btn-custom mt-3" id="openPomodoroModal">Abrir Pomodoro Timer</button>
+        <button class="btn btn-custom mt-3" data-bs-toggle="modal" data-bs-target="#taskHistoryModal">Ver Histórico de Tarefas</button>
     </div>
 
     <!-- Modal de Histórico de Tarefas -->

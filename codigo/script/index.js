@@ -1,15 +1,15 @@
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-const completedTasksByMonth = JSON.parse(localStorage.getItem('completedTasksByMonth')) || {};
+const completedTasksByPeriod = JSON.parse(localStorage.getItem('completedTasksByPeriod')) || { month: {}, week: {}, day: {} };
 let completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
 
 const ctx = document.getElementById('taskChart').getContext('2d');
 const chart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: Object.keys(completedTasksByMonth),
+        labels: [],
         datasets: [{
             label: 'Tarefas Concluídas',
-            data: Object.values(completedTasksByMonth),
+            data: [],
             backgroundColor: 'rgba(111, 66, 193, 0.2)',
             borderColor: 'rgba(111, 66, 193, 1)',
             borderWidth: 1
@@ -24,206 +24,257 @@ const chart = new Chart(ctx, {
     }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    loadTasks();
+    updateChart();
+    loadCompletedTasks();
+    loadPomodoro();
+});
+
 function addTask() {
-    const title = document.getElementById('taskTitle').value.trim();
-    const description = document.getElementById('taskDescription').value.trim();
-    if (title && description) {
-        const task = {
-            title,
-            description,
-            completed: false,
-            date: new Date()
-        };
-        tasks.push(task);
+    const title = document.getElementById('taskTitle').value;
+    const description = document.getElementById('taskDescription').value;
+    const timestamp = new Date().toISOString();
+    
+    if (title.trim() !== '') {
+        tasks.push({ title, description, done: false, timestamp });
         saveTasks();
+        loadTasks();
         document.getElementById('taskTitle').value = '';
         document.getElementById('taskDescription').value = '';
-        renderTasks();
     }
 }
 
 function toggleTask(index) {
-    const task = tasks[index];
-    task.completed = !task.completed;
-    updateCompletedTasks(task);
+    tasks[index].done = !tasks[index].done;
+    const taskTimestamp = new Date(tasks[index].timestamp);
+    const dateKey = taskTimestamp.toISOString().split('T')[0];
+
+    if (tasks[index].done) {
+        completedTasks.push(tasks[index]);
+        
+        if (!completedTasksByPeriod.day[dateKey]) {
+            completedTasksByPeriod.day[dateKey] = 0;
+        }
+        completedTasksByPeriod.day[dateKey]++;
+        
+        const weekKey = `${taskTimestamp.getFullYear()}-W${getWeekNumber(taskTimestamp)}`;
+        if (!completedTasksByPeriod.week[weekKey]) {
+            completedTasksByPeriod.week[weekKey] = 0;
+        }
+        completedTasksByPeriod.week[weekKey]++;
+        
+        const monthKey = `${taskTimestamp.getFullYear()}-${taskTimestamp.getMonth() + 1}`;
+        if (!completedTasksByPeriod.month[monthKey]) {
+            completedTasksByPeriod.month[monthKey] = 0;
+        }
+        completedTasksByPeriod.month[monthKey]++;
+    } else {
+        completedTasks = completedTasks.filter(task => task !== tasks[index]);
+        
+        if (completedTasksByPeriod.day[dateKey]) {
+            completedTasksByPeriod.day[dateKey]--;
+        }
+        
+        const weekKey = `${taskTimestamp.getFullYear()}-W${getWeekNumber(taskTimestamp)}`;
+        if (completedTasksByPeriod.week[weekKey]) {
+            completedTasksByPeriod.week[weekKey]--;
+        }
+        
+        const monthKey = `${taskTimestamp.getFullYear()}-${taskTimestamp.getMonth() + 1}`;
+        if (completedTasksByPeriod.month[monthKey]) {
+            completedTasksByPeriod.month[monthKey]--;
+        }
+    }
+
     saveTasks();
-    renderTasks();
+    saveCompletedTasksByPeriod();
+    loadTasks();
     updateChart();
-    renderCompletedTasks();
 }
 
-function updateCompletedTasks(task) {
-    const monthYear = `${task.date.getMonth() + 1}/${task.date.getFullYear()}`;
-    if (task.completed) {
-        if (completedTasksByMonth[monthYear]) {
-            completedTasksByMonth[monthYear]++;
-        } else {
-            completedTasksByMonth[monthYear] = 1;
-        }
-        completedTasks.push(task);
-    } else {
-        completedTasksByMonth[monthYear]--;
-        completedTasks = completedTasks.filter(t => t !== task);
-    }
-    localStorage.setItem('completedTasksByMonth', JSON.stringify(completedTasksByMonth));
-    localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+function clearCompletedTasks() {
+    tasks = tasks.filter(task => !task.done);
+    saveTasks();
+    loadTasks();
 }
 
 function saveTasks() {
     localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-function renderTasks() {
+function saveCompletedTasksByPeriod() {
+    localStorage.setItem('completedTasksByPeriod', JSON.stringify(completedTasksByPeriod));
+}
+
+function loadTasks() {
     const taskList = document.getElementById('taskList');
     taskList.innerHTML = '';
+
     tasks.forEach((task, index) => {
         const li = document.createElement('li');
-        li.className = `list-group-item ${task.completed ? 'done' : ''}`;
+        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+        if (task.done) {
+            li.classList.add('done');
+        }
+        
         li.innerHTML = `
             <div>
-                <strong>${task.title}</strong><br>
-                <span>${task.description}</span>
+                <h5>${task.title}</h5>
+                <p>${task.description}</p>
             </div>
-            <button class="btn btn-sm btn-custom" onclick="toggleTask(${index})">
-                ${task.completed ? 'Desfazer' : 'Feito'}
-            </button>
+            <button class="btn btn-custom" onclick="toggleTask(${index})">${task.done ? 'Desfazer' : 'Concluir'}</button>
         `;
         taskList.appendChild(li);
     });
 }
 
-function renderCompletedTasks() {
+function updateChart() {
+    const filter = document.getElementById('chartFilter').value;
+    let labels = [];
+    let data = [];
+
+    switch (filter) {
+        case 'month':
+            labels = Object.keys(completedTasksByPeriod.month);
+            data = Object.values(completedTasksByPeriod.month);
+            break;
+        case 'week':
+            labels = Object.keys(completedTasksByPeriod.week);
+            data = Object.values(completedTasksByPeriod.week);
+            break;
+        case 'day':
+            labels = Object.keys(completedTasksByPeriod.day);
+            data = Object.values(completedTasksByPeriod.day);
+            break;
+    }
+
+    chart.data.labels = labels;
+    chart.data.datasets[0].data = data;
+    chart.update();
+}
+
+function getWeekNumber(date) {
+    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+    const yearStart = new Date(d.getFullYear(), 0, 1);
+    const weekNo = Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
+    return weekNo;
+}
+
+function loadCompletedTasks() {
     const taskHistoryList = document.getElementById('taskHistoryList');
     taskHistoryList.innerHTML = '';
-    completedTasks.forEach(task => {
+
+    completedTasks.forEach((task) => {
         const li = document.createElement('li');
         li.className = 'list-group-item';
-        li.innerHTML = `
-            <div>
-                <strong>${task.title}</strong><br>
-                <span>${task.description}</span><br>
-                <small>${new Date(task.date).toLocaleString()}</small>
-            </div>
-        `;
+        li.innerHTML = `<div><h5>${task.title}</h5><p>${task.description}</p></div>`;
         taskHistoryList.appendChild(li);
     });
 }
 
-function updateChart() {
-    chart.data.labels = Object.keys(completedTasksByMonth);
-    chart.data.datasets[0].data = Object.values(completedTasksByMonth);
-    chart.update();
+function loadPomodoro() {
+    const modal = document.getElementById("pomodoroModal");
+    const openModalBtn = document.getElementById("openPomodoroModal");
+    const closeModalBtn = modal.querySelector(".close");
+    const pomodoroBtn = document.getElementById("pomodoro");
+    const shortBreakBtn = document.getElementById("shortBreak");
+    const longBreakBtn = document.getElementById("longBreak");
+    const startBtn = document.getElementById("start");
+    const resetBtn = document.getElementById("reset");
+    const minutesDisplay = document.getElementById("minutes");
+    const secondsDisplay = document.getElementById("seconds");
+
+    let interval;
+    let timeLeft = 25 * 60;
+    let isRunning = false;
+    let mode = "pomodoro";
+
+    openModalBtn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    closeModalBtn.onclick = function() {
+        modal.style.display = "none";
+        resetTimer();
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+            resetTimer();
+        }
+    }
+
+    pomodoroBtn.onclick = function() {
+        switchMode("pomodoro");
+    }
+
+    shortBreakBtn.onclick = function() {
+        switchMode("shortBreak");
+    }
+
+    longBreakBtn.onclick = function() {
+        switchMode("longBreak");
+    }
+
+    startBtn.onclick = function() {
+        if (isRunning) {
+            clearInterval(interval);
+            startBtn.textContent = "Start";
+        } else {
+            interval = setInterval(updateTimer, 1000);
+            startBtn.textContent = "Pause";
+        }
+        isRunning = !isRunning;
+    }
+
+    resetBtn.onclick = function() {
+        resetTimer();
+    }
+
+    function switchMode(newMode) {
+        mode = newMode;
+        resetTimer();
+        if (mode === "pomodoro") {
+            timeLeft = 25 * 60;
+        } else if (mode === "shortBreak") {
+            timeLeft = 5 * 60;
+        } else if (mode === "longBreak") {
+            timeLeft = 15 * 60;
+        }
+        updateDisplay();
+    }
+
+    function updateTimer() {
+        if (timeLeft <= 0) {
+            clearInterval(interval);
+            isRunning = false;
+            startBtn.textContent = "Start";
+        } else {
+            timeLeft--;
+            updateDisplay();
+        }
+    }
+
+    function resetTimer() {
+        clearInterval(interval);
+        isRunning = false;
+        startBtn.textContent = "Start";
+        switchMode(mode);
+    }
+
+    function updateDisplay() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        minutesDisplay.textContent = minutes.toString().padStart(2, "0");
+        secondsDisplay.textContent = seconds.toString().padStart(2, "0");
+    }
 }
 
 function toggleDarkMode() {
-    document.body.classList.toggle('dark-mode');
-    document.body.classList.toggle('light-mode');
-    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    const body = document.body;
+    body.classList.toggle('dark-mode');
+    body.classList.toggle('light-mode');
 }
-
-function loadDarkMode() {
-    const darkMode = JSON.parse(localStorage.getItem('darkMode'));
-    if (darkMode) {
-        document.body.classList.add('dark-mode');
-    } else {
-        document.body.classList.add('light-mode');
-    }
-}
-
-function clearCompletedTasks() {
-    tasks = tasks.filter(task => !task.completed);
-    saveTasks();
-    renderTasks();
-}
-
-// Pomodoro Timer Modal Logic
-document.getElementById('openPomodoroModal').addEventListener('click', function() {
-    document.getElementById('pomodoroModal').style.display = 'block';
-});
-
-document.querySelector('.close').addEventListener('click', function() {
-    document.getElementById('pomodoroModal').style.display = 'none';
-});
-
-window.onclick = function(event) {
-    if (event.target == document.getElementById('pomodoroModal')) {
-        document.getElementById('pomodoroModal').style.display = 'none';
-    }
-};
-let timer;
-let isRunning = false;
-let currentMode = "pomodoro";
-let time = 25 * 60;
-
-const startButton = document.getElementById("start");
-const resetButton = document.getElementById("reset");
-const pomodoroButton = document.getElementById("pomodoro");
-const shortBreakButton = document.getElementById("shortBreak");
-const longBreakButton = document.getElementById("longBreak");
-
-startButton.addEventListener("click", () => {
-    if (isRunning) {
-        clearInterval(timer);
-        startButton.textContent = "Start";
-    } else {
-        timer = setInterval(updateTimer, 1000);
-        startButton.textContent = "Pause";
-    }
-    isRunning = !isRunning;
-});
-
-resetButton.addEventListener("click", resetTimer);
-
-pomodoroButton.addEventListener("click", () => switchMode("pomodoro", 25));
-shortBreakButton.addEventListener("click", () => switchMode("shortBreak", 5));
-longBreakButton.addEventListener("click", () => switchMode("longBreak", 15));
-
-function updateTimer() {
-    if (time > 0) {
-        time--;
-        displayTime();
-    } else {
-        clearInterval(timer);
-        isRunning = false;
-        startButton.textContent = "Start";
-        alert("Tempo acabou!");
-    }
-}
-
-function displayTime() {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    document.getElementById("minutes").textContent = minutes < 10 ? `0${minutes}` : minutes;
-    document.getElementById("seconds").textContent = seconds < 10 ? `0${seconds}` : seconds;
-}
-
-function resetTimer() {
-    clearInterval(timer);
-    isRunning = false;
-    startButton.textContent = "Start";
-    switchMode(currentMode, getModeTime(currentMode));
-}
-
-function switchMode(mode, duration) {
-    currentMode = mode;
-    time = duration * 60;
-    document.querySelectorAll(".modes button").forEach(btn => btn.classList.remove("active"));
-    document.getElementById(mode).classList.add("active");
-    displayTime();
-}
-
-function getModeTime(mode) {
-    switch (mode) {
-        case "pomodoro": return 25;
-        case "shortBreak": return 5;
-        case "longBreak": return 15;
-    }
-}
-
-
-window.onload = function() {
-    renderTasks();
-    updateChart();
-    loadDarkMode();
-    renderCompletedTasks();
-};
