@@ -45,21 +45,23 @@
 
     <!-- Modal do Pomodoro Timer -->
     <div id="pomodoroModal" class="modal">
-        <div class="modal-content" style="background-color:rgb(107, 65, 107);">
+        <div class="modal-content">
             <span class="close">&times;</span>
-            <div class="container">
+            <div class="container text-center">
                 <h1>Pomodoro Timer <img src="https://img.icons8.com/emoji/48/tomato-emoji.png" alt="Tomato"></h1>
-                <div class="modes">
-                    <button id="pomodoro" class="active">Pomodoro</button>
-                    <button id="shortBreak">Pausa Curta</button>
-                    <button id="longBreak">Pausa Longa</button>
+                <div class="modes mb-3">
+                    <button id="pomodoro" class="btn btn-custom active">Pomodoro</button>
+                    <button id="shortBreak" class="btn btn-custom">Pausa Curta</button>
+                    <button id="longBreak" class="btn btn-custom">Pausa Longa</button>
                 </div>
-                <div class="timer" style="font-size:1.5rem ;">
-                    <span id="minutes">25</span>:<span id="seconds">00</span>
+                <div class="timer mb-3">
+                    <div class="timer-circle">
+                        <span id="minutes">25</span>:<span id="seconds">00</span>
+                    </div>
                 </div>
                 <div class="controls">
-                    <button id="start">Start</button>
-                    <button id="reset">Reset</button>
+                    <button id="start" class="btn btn-custom">Start</button>
+                    <button id="reset" class="btn btn-custom">Reset</button>
                 </div>
             </div>
         </div>
