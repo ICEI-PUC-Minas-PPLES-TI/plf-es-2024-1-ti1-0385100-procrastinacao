@@ -100,3 +100,9 @@ canvas {
     color: white;
     color:  black;
 }
+
+#user{
+    display: flex;
+    float: right;
+    padding-bottom: 30px;
+}
