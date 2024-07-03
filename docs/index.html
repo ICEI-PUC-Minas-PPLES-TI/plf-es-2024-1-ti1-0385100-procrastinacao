@@ -273,13 +273,9 @@
                       <td>Permitir que o usuário adicione amigos</td>
                       <td>BAIXA</td>
                   </tr>
-                  <tr>
-                    <th scope="row">RF-005</th>
-                    <td>Permitir que o usuário veja uma barra de progresso de acordo com suas tarefas realizadas</td>
-                    <td>MÉDIA</td>
-                </tr>
+                
                 <tr>
-                  <th scope="row">RF-006</th>
+                  <th scope="row">RF-005</th>
                   <td>Permitir que o usuário adicione uma mensagem no histórico das tarefas diárias</td>
                   <td>BAIXA</td>
               </tr>
@@ -438,7 +434,8 @@
                   <img class="img-fluid" src="assets/images/exemplo-workflow.png" alt="">
                 </p>
               </div>
-              <p>......  COLOQUE AQUI O SEU TEXTO ......</p>
+              <p>Cada funcionalidade foi adicionada em uma pasta separada na main branch</p>
+              <img src="/docs/assets/images/ambientegithub.jpg" alt="">
             </section>
           </section>
           <hr class="divider">
@@ -463,7 +460,9 @@
                 <p>O video de apresentação é voltado para que o público externo possa conhecer a solução. O formato é livre, sendo importante que seja apresentado o problema e a solução numa linguagem descomplicada e direta.</p>
                 <p>Utilize o recurso de compartilhamento via embed e inclua o vídeo logo abaixo.</p>
               </div>
-              <p>......  COLOQUE AQUI O SEU VIDEO ......</p>
+             <video width="640" height="360" controls volume="1.0">
+        <source src="/docs/assets/images/Video de TIAW.mp4" type="video/mp4">
+
             </section>
 
             <section id="ti_funcionalidades">
@@ -584,27 +583,26 @@
             <h4>Estruturas de Dados</h4>
               <p>Descrição das estruturas de dados utilizadas na solução com exemplos no formato JSON.
                 <button type="button" class="btn btn-light btn-sm float-right" data-toggle="collapse" href="#collapseEstruturas">Info</button>
-            <h5>Estrutura de Dados - Tarefas<span class="exemplo">EXEMPLO</span></h5>
-            <p>Tarefas a serem realizadas</p>
+            <h5>Estrutura de Dados - Tarefas</h5>
+            <p>Registro das tarefas a serem realizadas</p>
             <pre>
               {
                 "id": 1,
-                "nome": "Leanne Graham",
-                "descrição": "Belo Horizonte",
+                "nome": "Praticar programação",
+                "descrição": "Assistir a video aulas sobre a linguagem de programação Python",
+                usuario: Jorge_123,
               }
             </pre>
           </section>
 
           <section>
-            <h5>Estrutura de Dados - Usuários<span class="exemplo">EXEMPLO</span></h5>
+            <h5>Estrutura de Dados - Usuários</h5>
             <p>Registro dos usuários do sistema utilizados para login e para o perfil do sistema</p>
             <pre>
               {
-                id: "eed55b91-45be-4f2c-81bc-7686135503f9"
-                email: "admin@abc.com"
-                id: "eed55b91-45be-4f2c-81bc-7686135503f9"
-                login: "admin"
-                nome: "Administrador do Sistema"
+                id: "1"
+                email: "exemplo@abc.com"
+                nome: "João da Silva"
                 senha: "123"
               }
             </pre>
@@ -625,24 +623,24 @@
               </div>
 
               <section>
-                <h5>Images:</h5>
+                <h5>Player de música</h5>
                 <ul>
-                  <li>Unsplash - <a target="_blank" href="https://unsplash.com/">https://unsplash.com/</a><span class="exemplo">EXEMPLO</span></li>
+                  <li>SoundCloud - <a target="_blank" href="https://soundcloud.com">https://soundcloud.com</a></li>
                 </ul>
               </section>
 
               <section>
-                <h5>Fonts:</h5>
+                <h5>Fontes e ícones:</h5>
                 <ul>
-                  <li>Icons Font Face - <a target="_blank" href="https://fontawesome.com/">https://fontawesome.com/</a><span class="exemplo">EXEMPLO</span></li>
+                  <li>FontAwesome - <a target="_blank" href="https://fontawesome.com/">https://fontawesome.com/</a></li>
                 </ul>
               </section>
 
               <section>
                 <h5>Scripts:</h5>
                 <ul>
-                  <li>jQuery - <a target="_blank" href="http://www.jquery.com/">http://www.jquery.com/</a><span class="exemplo">EXEMPLO</span></li>
-                  <li>Bootstrap 4 - <a target="_blank" href="http://getbootstrap.com/">http://getbootstrap.com/</a><span class="exemplo">EXEMPLO</span></li>
+                  <li>Script - <a target="_blank" href="https://getbootstrap.com/docs/5.3/getting-started/javascript/">https://getbootstrap.com/docs/5.3/getting-started/javascript/</a></li>
+                  <li>Bootstrap - <a target="_blank" href="http://getbootstrap.com/">http://getbootstrap.com/</a></li>
                 </ul>
               </section>
             </section>
@@ -660,51 +658,27 @@
               <p>Apresente uma lista de perguntas e respostas comuns associadas ao projeto. Inclua perguntas como: (1) detalhes de acesso e uso do projeto; (2) informações sobre a instalação e configuração da aplicação; (3) questões sobre a manutenção da aplicação; (4) detalhes sobre a integração da aplicação com outros sistemas; (5) questões sobre a segurança da aplicação.</p>
             </div>
 
-            <span class="exemplo">EXEMPLO</span>
             <div class="row">
               <div class="col-lg-12">
                 <div class="accordion accordion-alterate arrow-right" id="popularTopics">
                   <div class="card">
                     <div class="card-header" id="heading1">
                       <h5 class="mb-0"> <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapse1"
-                          aria-expanded="false" aria-controls="collapse1">What does royalty free mean?</a> </h5>
+                          aria-expanded="false" aria-controls="collapse1">É possível acessar minhas tarefas em diferentes dispositivos?</a> </h5>
                     </div>
                     <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#popularTopics">
-                      <div class="card-body"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown
-                        printer took a galley of type and scrambled it to make a type specimen book. It has survived not
-                        only five centuries, but also the leap into electronic typesetting, remaining essentially
-                        unchanged. </div>
+                      <div class="card-body"> Sim! Através do sistema de login é possivel ver as tarefas registradas no usuário desejado em qualquer dispositivo que fizer o login. </div>
                     </div>
                   </div>
                   <div class="card">
                     <div class="card-header" id="heading2">
                       <h5 class="mb-0"> <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapse2"
-                          aria-expanded="false" aria-controls="collapse2">What is a single application?</a> </h5>
+                          aria-expanded="false" aria-controls="collapse2">Quais são os planos disponiveis? A aplicação é paga?</a> </h5>
                     </div>
                     <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#popularTopics">
-                      <div class="card-body"> Iisque Anim pariatur cliche reprehenderit, enim eiusmod high life
-                        accusamus terry richardson ad squid. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf
-                        moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch
-                        et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea
-                        proident. Ad vegan excepteur butcher vice lomo. </div>
+                      <div class="card-body"> Não! O WEDOIT é uma aplicação totalmente gratuita feita para alcançar o maior número de pessoas que sofrem com o problema da procastinação </div>
                     </div>
                   </div>
-                  <div class="card">
-                    <div class="card-header" id="heading3">
-                      <h5 class="mb-0"> <a href="#" class="collapsed" data-toggle="collapse" data-target="#collapse3"
-                          aria-expanded="false" aria-controls="collapse3">What are some examples of permitted end
-                          products?</a> </h5>
-                    </div>
-                    <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#popularTopics">
-                      <div class="card-body"> Iisque persius interesset his et, in quot quidam persequeris vim, ad mea
-                        essent possim iriure. Mutat tacimates id sit. Ridens mediocritatem ius an, eu nec magna
-                        imperdiet. </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
           </section>
           <hr class="divider">
