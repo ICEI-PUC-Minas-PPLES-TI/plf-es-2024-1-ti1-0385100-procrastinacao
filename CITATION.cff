@@ -7,8 +7,8 @@ authors:
     given-names: Pedro
   - family-names: Gonçalves Levy
     given-names: Bernardo
-  - family-names: 
-    given-names: 
+  - family-names: Marques de Moura
+    given-names:  Júlia
   - family-names: 
     given-names: 
   - family-names: 
@@ -17,12 +17,12 @@ authors:
     given-names:
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Vieira
+    given-names: Rommel
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Alves
+    given-names: Simone
 keywords:
   - Procrastinação
   - to-do list
