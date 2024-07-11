@@ -1,6 +1,6 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
-title: Trabalho TIAW Procrastinação
+title: Procrastinação
 authors:
   - family-names: Ferreira Barcelos Costa
     given-names: Pedro
@@ -10,11 +10,11 @@ authors:
     given-names:  Júlia
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: Vieira
+    family-names: Carneiro Vieira
     given-names: Rommel
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: Alves
+    family-names: Alves Nogueira
     given-names: Simone
 keywords:
   - Procrastinação
